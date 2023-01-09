@@ -1,24 +1,29 @@
+export const LogLevel = {
+  INFO: 30,
+  DEBUG: 20,
+};
+
 export class Logger {
-  name = "timberrr";
-  // info: 30, debug: 20
-  level = 30;
-  static level = {
-    INFO: 30,
-    DEBUG: 20,
-  };
+  level = LogLevel.INFO;
   info(data: object, msg: string) {
-    const logObject = { msg, meta: data };
-    const serializedLog = JSON.stringify(logObject);
-    if (Logger.level.INFO >= this.level) {
-      console.log(serializedLog);
-    }
+    const logLine = this.serialize(data, msg);
+    this.log(LogLevel.INFO, logLine);
   }
   debug(data: object, msg: string) {
+    const logLine = this.serialize(data, msg);
+    this.log(LogLevel.DEBUG, logLine);
+  }
+
+  serialize(data: object, msg: string): string {
     const logObject = { msg, meta: data };
     const serializedLog = JSON.stringify(logObject);
-    new Array(10000 * 4000).fill(1).forEach(() => {});
-    if (Logger.level.DEBUG >= this.level) {
-      console.log(serializedLog);
+    return serializedLog;
+  }
+
+  log(level: number, json: string): void {
+    console.log(level, this.level);
+    if (level >= this.level) {
+      console.log(json);
     }
   }
 }
