@@ -21,9 +21,8 @@ export class Logger {
   }
 
   log(level: number, json: string): void {
-    console.log(level, this.level);
     if (level >= this.level) {
-      console.log(json);
+      console.log(json.slice(0, 100));
     }
   }
 }
